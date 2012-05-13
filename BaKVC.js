@@ -35,29 +35,25 @@
 //*****************************************************************************
 function kvcSet(obj,path,val) {
 	
-	var	kvc2;
+	var	kvc,kvc2,oldVal,k,p;
 	var	idx=path.indexOf('.');
 	
 	if(idx<0)
 	{
-		//
-		// obj is the target, fire notifications here!!!
-		// 
+		oldVal=obj[path];
 		obj[path]=val;
 	}
 	else
 	{
-		var k=path.substr(0,idx);
-		var p=path.substr(idx+1);
+		k=path.substr(0,idx);
+		p=path.substr(idx+1);
 		
-		kvcSet(obj[k],p,val);
+		oldVal=kvcSet(obj[k],p,val);
 		
 		kvc2=KVC_ObservedPaths[k];
 	}
 	
-	var	kvc=KVC_ObservedPaths[path];
-	
-	if(kvc)
+	if((kvc=KVC_ObservedPaths[path]))
 	{
 		kvc.pushNotifications(obj,path,val);
 	}
@@ -66,13 +62,15 @@ function kvcSet(obj,path,val) {
 	{
 		kvc2.pushNotifications(obj,k,obj[k]);
 	}
+	
+	return oldVal;
 }
-function kvcRegisterObserver(obj,path,funcOrFuncName,target,updateUI) {
+function kvcRegisterObserver(obj,path,funcOrFuncName,target,fireNow) {
 	
 	if(typeof target==="boolean")
 	{
-		updateUI=target;
-		target=null;
+		fireNow=target;
+		target=undefined;
 	}
 	
 	var	kvc=KVC_ObservedPaths[path];
@@ -85,7 +83,7 @@ function kvcRegisterObserver(obj,path,funcOrFuncName,target,updateUI) {
 	
 	var retVal=kvc.registerObserver(obj,funcOrFuncName,target);
 	
-	if(updateUI)
+	if(fireNow)
 	{
 		var val=obj[path];
 		
@@ -107,7 +105,7 @@ function kvcUnregisterObserver(obj,path,funcOrFuncName,target) {
 	
 	if(!kvc)
 	{
-		return null;
+		return undefined;
 	}
 	
 	var retVal=kvc.unregisterObserver(obj,funcOrFuncName,target);
@@ -123,140 +121,6 @@ function kvcUnregisterObserver(obj,path,funcOrFuncName,target) {
 //*****************************************************************************
 // Convenience methods, require jQuery
 //*****************************************************************************
-function kvcBindVal(object,keyPath,selector1,selector2,events,updateUI) {
-	
-	_kvcBind_(0,object,keyPath,selector1,selector2,events,updateUI);
-}
-function kvcBindSlider(object,keyPath,selector1,selector2,events,updateUI) {
-	
-	_kvcBind_(1,object,keyPath,selector1,selector2,events,updateUI);
-}
-function kvcBindOnOff(object,keyPath,selector1,selector2,events,updateUI) {
-	
-	_kvcBind_(2,object,keyPath,selector1,selector2,events,updateUI);
-}
-function _kvcBind_(type,object,keyPath,selector1,selector2,events,updateUI) {
-	
-	if(typeof events==="boolean")
-	{
-		updateUI=true;
-		events=null;
-	}
-	else if(typeof selector2==="boolean")
-	{
-		updateUI=true;
-		selector2=null;
-	}
-	
-	if(!events)
-	{
-		events='change';
-	}
-	
-	$(selector1).on(events,selector2,function(event) {
-		
-		var val=$(this).val();
-		
-		if(type===2)
-		{
-			val=(val==='on');
-		}
-		
-		kvcSet(object,keyPath,val);
-	});
-	
-	if(selector2 && selector2!=='')
-	{
-		selector1=selector1+' '+selector2;
-	}
-	
-	// console.log("Selector: %s",selector1);
-	
-	kvcRegisterObserver(object,keyPath,function(obj,path,val) {
-		
-		if(type===2)
-		{
-			val=(val)?'on':'off';
-		}
-		
-		$(selector1).val(val);
-		if(type>0)
-		{
-			$(selector1).slider('refresh');
-		}
-	});
-	
-	if(updateUI)
-	{
-		//
-		// Trigger change notification on current val to sync UI
-		// 
-		var val=object[keyPath];
-		
-		if(type===2)
-		{
-			val=(val)?'on':'off';
-		}
-		
-		$(selector1).val(val);
-		if(type>0)
-		{
-			$(selector1).slider('refresh');
-		}
-	}
-}
-function kvcBindHTML(object,keyPath,selector,updateUI) {
-	
-	kvcRegisterObserver(object,keyPath,function(obj,path,val) {
-		
-		$(selector).html(val);
-	});
-	
-	// console.log("kvcBindHTML selector: %s",selector);
-	
-	if(updateUI)
-	{
-		//
-		// Trigger change notification on current val to sync UI
-		// 
-		$(selector).html(object[keyPath]);
-	}
-}
-BaKVC_checkParameters=function(parameters,descriptions) {
-	
-	var	i;
-	for(i=0;i<descriptions.length;i+=4)
-	{
-		var	name=descriptions[i];
-		var type=descriptions[i+1];
-		var required=descriptions[i+2];
-		var defaultValue=descriptions[i+3];
-		
-		var typeActual=typeof parameters[name];
-		
-		if(typeActual==='undefined')
-		{
-			if(required)
-			{
-				throw "Required parameter '"+name+"'missing!";
-			}
-			else if(typeof defaultValue!=='undefined')
-			{
-				parameters[name]=defaultValue;
-			}
-		}
-		else
-		{
-			if(typeActual!==type)
-			{
-				throw "Parameter '"+name+"' has type '"+typeActual+"' expected '"+type+"'";
-			}
-		}
-	}
-	
-	return parameters;
-};
-
 kvcBindAutoParameterDescriptions=[
 	
 	// name			type		required	default
@@ -427,7 +291,7 @@ this.unregisterObserver=function(obj,funcOrFuncName,target) {
 	if(idx<0)
 	{
 		// Error: not registered!
-		return null;
+		return undefined;
 	}
 	
 	var objectFuncs=this.funcs[idx];
@@ -448,7 +312,7 @@ this.unregisterObserver=function(obj,funcOrFuncName,target) {
 	if(fidx<0)
 	{
 		// function not found
-		return null;
+		return undefined;
 	}
 	
 	objectFuncs.splice(fidx,1);
