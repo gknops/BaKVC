@@ -39,19 +39,12 @@ $(function() {
 	// Text Inputs
 	//*****************************************************************************
 	
-	kvcBindAuto({
-		selector:	'.varTextInputExample',
-		object:		testObject,
-		keyPath:	'varTextInputExample',
-		events:		'keyup change',
-		value:		'The quick brown fox'
-	});
+	kvcBindAuto('.varTextInputExample',testObject,'varTextInputExample','The quick brown fox','keyup change');
 	
 	
 	//*****************************************************************************
 	// Search Inputs
 	//*****************************************************************************
-	
 	kvcBindAuto({
 		selector:	'.varSearchInputExample',
 		object:		testObject,
@@ -75,24 +68,13 @@ $(function() {
 	//*****************************************************************************
 	// Slider
 	//*****************************************************************************
-	
-	kvcBindAuto({
-		selector:	'.varSlider',
-		object:		testObject,
-		keyPath:	'varSlider',
-		value:		42
-	});
+	kvcBindAuto('.varSlider',testObject,'varSlider',42);
 	
 	
 	//*****************************************************************************
 	// Flip toggle switch
 	//*****************************************************************************
-	kvcBindAuto({
-		selector:	'.varToggleSwitch',
-		object:		testObject,
-		keyPath:	'varToggleSwitch',
-		value:		false
-	});
+	kvcBindAuto('.varToggleSwitch',testObject,'varToggleSwitch',false);
 	
 	kvcRegisterObserver(testObject,'varToggleSwitch',function(val,oldVal,path,obj) {
 		
@@ -103,47 +85,31 @@ $(function() {
 	//*****************************************************************************
 	// Radio Buttons
 	//*****************************************************************************
-	
-	kvcBindAuto({
-		selector:	'.varRadioExample',
-		object:		testObject,
-		keyPath:	'varRadioExample',
-		value:		'choice-3'
-	});
-	
+	kvcBindAuto('.varRadioExample',testObject,'varRadioExample','choice-3');
 	
 	//*****************************************************************************
 	// Checkboxes
 	//*****************************************************************************
-	
 	kvcRegisterObserver(testObject,'varColorCheckboxes',function(val,oldVal,path,obj) {
 		
+		var property;
 		var html='{<br />';
 		for(property in val)
 		{
-			html+='\t'+property+': '+val[property]+',<br />';
+			if(val.hasOwnProperty(property))
+			{
+				html+='\t'+property+': '+val[property]+',<br />';
+			}
 		}
 		html+='}';
 		$('#varColorCheckboxesDesc').html(html);
 	});
 	
-	kvcBindAuto({
-		selector:	'.varColorCheckboxes',
-		object:		testObject,
-		keyPath:	'varColorCheckboxes',
-		value:		{colorGreen: true}
-	});
+	kvcBindAuto('.varColorCheckboxes',testObject,'varColorCheckboxes',{colorGreen: true});
 	
 	
 	//*****************************************************************************
 	// Select Menu
 	//*****************************************************************************
-	
-	kvcBindAuto({
-		selector:	'.varSelectMenu',
-		object:		testObject,
-		keyPath:	'varSelectMenu',
-		value:		'standard'
-	});
-	
+	kvcBindAuto('.varSelectMenu',testObject,'varSelectMenu','standard');
 });

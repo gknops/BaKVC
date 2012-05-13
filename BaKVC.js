@@ -53,7 +53,9 @@ function kvcSet(obj,path,val) {
 		kvc2=KVC_ObservedPaths[k];
 	}
 	
-	if((kvc=KVC_ObservedPaths[path]))
+	kvc=KVC_ObservedPaths[path];
+	
+	if(kvc)
 	{
 		kvc.pushNotifications(obj,path,val,oldVal);
 	}
@@ -127,14 +129,14 @@ kvcBindAutoParameterDescriptions=[
 	'selector',		'string',	true,		undefined,
 	'object',		'object',	true,		undefined,
 	'keyPath',		'string',	true,		undefined,
-	'events',		'string',	false,		'change',
 	'value',		undefined,	false,		undefined,
+	'events',		'string',	false,		'change',
 	'on',			'string',	false,		'on',
 	'off',			'string',	false,		'off'
 ];
-function kvcBindAuto(parameters) {
+function kvcBindAuto() {
 	
-	parameters=KVC.checkParameters(parameters,kvcBindAutoParameterDescriptions);
+	var parameters=KVC.checkArguments(arguments,kvcBindAutoParameterDescriptions);
 	
 	// console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
 	
@@ -382,15 +384,45 @@ this._indexOfObject=function(obj) {
 //*****************************************************************************
 //	Class methods
 //*****************************************************************************
-KVC.checkParameters=function(parameters,descriptions) {
+KVC.checkArguments=function(args,descriptions) {
 	
+	var parameters,name,type,required,defaultValue;
 	var	i;
+	
+	if(args.length===1)
+	{
+		parameters=args[0];
+	}
+	else
+	{
+		parameters={};
+		
+		var ia=0;
+		
+		for(i=0;i<descriptions.length;i+=4)
+		{
+			name=descriptions[i];
+			type=descriptions[i+1];
+			required=descriptions[i+2];
+			
+			if(required || type===undefined || typeof args[ia]===type)
+			{
+				parameters[name]=args[ia++];
+				
+				if(ia>=args.length)
+				{
+					break;
+				}
+			}
+		}
+	}
+	
 	for(i=0;i<descriptions.length;i+=4)
 	{
-		var	name=descriptions[i];
-		var type=descriptions[i+1];
-		var required=descriptions[i+2];
-		var defaultValue=descriptions[i+3];
+		name=descriptions[i];
+		type=descriptions[i+1];
+		required=descriptions[i+2];
+		defaultValue=descriptions[i+3];
 		
 		var typeActual=typeof parameters[name];
 		
