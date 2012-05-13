@@ -114,7 +114,6 @@ $(function() {
 	kvcBindAuto('.varSelectMenu',testObject,'varSelectMenu','standard');
 });
 
-var jqmLoaded=false;
 var isJQM=false;
 
 function switchToJQM() {
@@ -122,29 +121,14 @@ function switchToJQM() {
 	if(isJQM)
 	{
 		location.reload();
-		isJQM=false;
-		
-		$('#jqmSwitch').val('Switch to jQuery Mobile');
-		
-		return;
 	}
-	
-	$('#jqmSwitch').val('Switch to standard HTML');
-	
-	// $('#jqmSwitch').remove();
-	
-	if(!jqmLoaded)
+	else
 	{
 		$('head').append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />');
 		$.getScript('http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js');
 		
-		jqmLoaded=true;
+		$('#jqmSwitch').val('Switch to standard HTML');
+		$('body').trigger("create");
+		isJQM=true;
 	}
-	else
-	{
-		console.log("jqmLoaded!!!!!!!");
-	}
-	
-	$('body').trigger("create");
-	isJQM=true;
 }
