@@ -55,12 +55,12 @@ function kvcSet(obj,path,val) {
 	
 	if((kvc=KVC_ObservedPaths[path]))
 	{
-		kvc.pushNotifications(obj,path,val);
+		kvc.pushNotifications(obj,path,val,oldVal);
 	}
 	
 	if(kvc2)
 	{
-		kvc2.pushNotifications(obj,k,obj[k]);
+		kvc2.pushNotifications(obj,k,obj[k],oldVal);
 	}
 	
 	return oldVal;
@@ -89,11 +89,11 @@ function kvcRegisterObserver(obj,path,funcOrFuncName,target,fireNow) {
 		
 		if(typeof funcOrFuncName==="string")
 		{
-			target[funcOrFuncName](obj,path,val);
+			target[funcOrFuncName](val,val,path,obj);
 		}
 		else
 		{
-			funcOrFuncName(obj,path,val);
+			funcOrFuncName(val,val,path,obj);
 		}
 	}
 	
@@ -168,7 +168,7 @@ function kvcBindAuto(parameters) {
 	
 	console.log("combinedSelector: %s",combinedSelector);
 	
-	kvcRegisterObserver(parameters.object,parameters.keyPath,function(obj,path,val) {
+	kvcRegisterObserver(parameters.object,parameters.keyPath,function(val,oldVal,path,obj) {
 		
 		$(combinedSelector).each(function(index,element){
 			
@@ -328,7 +328,7 @@ this.unregisterObserver=function(obj,funcOrFuncName,target) {
 	
 	return funcOrFuncName;
 };
-this.pushNotifications=function(obj,path,val) {
+this.pushNotifications=function(obj,path,val,oldVal) {
 	
 	var idx=this._indexOfObject(obj);
 	
@@ -353,11 +353,11 @@ this.pushNotifications=function(obj,path,val) {
 		
 		if(typeof funcOrFuncName==="string")
 		{
-			objectTargets[i][funcOrFuncName](obj,path,val);
+			objectTargets[i][funcOrFuncName](val,oldVal,path,obj);
 		}
 		else
 		{
-			funcOrFuncName(obj,path,val);
+			funcOrFuncName(val,oldVal,path,obj);
 		}
 	}
 	

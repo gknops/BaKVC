@@ -63,7 +63,7 @@ $(function() {
 	
 	var demoString='The quick brown fox jumps over the lazy dog.';
 	
-	kvcRegisterObserver(testObject,'varSearchInputExample',function(obj,path,val) {
+	kvcRegisterObserver(testObject,'varSearchInputExample',function(val,oldVal,path,obj) {
 		
 		var myHtml=(demoString.split(val)).join('<span class="red">'+val+'</span>');
 		
@@ -95,7 +95,7 @@ $(function() {
 		value:		false
 	});
 	
-	kvcRegisterObserver(testObject,'varToggleSwitch',function(obj,path,val) {
+	kvcRegisterObserver(testObject,'varToggleSwitch',function(val,oldVal,path,obj) {
 		
 		console.log("varToggleSwitch set to '%s'",String(val));
 	});
@@ -117,7 +117,7 @@ $(function() {
 	// Checkboxes
 	//*****************************************************************************
 	
-	kvcRegisterObserver(testObject,'varColorCheckboxes',function(obj,path,val) {
+	kvcRegisterObserver(testObject,'varColorCheckboxes',function(val,oldVal,path,obj) {
 		
 		var html='{<br />';
 		for(property in val)
