@@ -125,7 +125,6 @@ kvcBindAutoParameterDescriptions=[
 	
 	// name			type		required	default
 	'selector',		'string',	true,		undefined,
-	'selector2',	'string',	false,		undefined,
 	'object',		'object',	true,		undefined,
 	'keyPath',		'string',	true,		undefined,
 	'events',		'string',	false,		'change',
@@ -139,7 +138,7 @@ function kvcBindAuto(parameters) {
 	
 	// console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
 	
-	$(parameters.selector).on(parameters.events,parameters.selector2,function(event) {
+	$(parameters.selector).on(parameters.events,function(event) {
 		
 		var val=$(this).val();
 		
@@ -164,13 +163,9 @@ function kvcBindAuto(parameters) {
 		}
 	});
 	
-	var combinedSelector=(parameters.selector2!==undefined)?parameters.selector+' '+parameters.selector2:parameters.selector;
-	
-	console.log("combinedSelector: %s",combinedSelector);
-	
 	kvcRegisterObserver(parameters.object,parameters.keyPath,function(val,oldVal,path,obj) {
 		
-		$(combinedSelector).each(function(index,element){
+		$(parameters.selector).each(function(index,element){
 			
 			console.log("%s element tag: %s  type: %s",path,element.tagName,element.type);
 			// console.dir(element);
