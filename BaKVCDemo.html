@@ -1,0 +1,298 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>BaKVC Demo</title> 
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	
+	<script type="text/javascript" src="BaKVC.js"></script>
+	<script type="text/javascript" src="BaKVCDemo.js"></script>
+	
+	<style type="text/css">
+		div .boxed {
+			border: 2px black solid;
+			padding: 1em;
+			margin: 1em;
+		}
+		.italic {
+			font-style: italic;
+		}
+		.bold {
+			font-weight: bold;
+		}
+		.red {
+			color: red;
+		}
+		pre {
+			margin-left: 30 px;
+			background: lightGray;
+		}
+	</style>
+</head> 
+
+<body> 
+
+	<div data-role="page" id="home">
+		
+		<!-- header -->
+	    <div class="scrollTop" data-role="header" data-position="fixed">
+			
+	        <h1>BaKVC Demo</h1>
+			
+	    </div>
+		
+		
+		<!-- content -->
+	    <div id="homeContent" data-role="content">
+			
+			<div class="boxed">
+				
+				<h1>Text Inputs</h1>
+				
+			    <label for="textInputExample1">Text Input1:</label>
+			    <input class="varTextInputExample" type="text" name="textInput1" id="textInputExample1" value=""  />
+				
+			    <label for="textInputExample2">Text Input2:</label>
+			    <input class="varTextInputExample" type="text" name="textInput2" id="textInputExample2" value=""  />
+				
+				A Span bound to the same variable: <span class="varTextInputExample bold"></span>
+				
+			</div>
+			
+			
+			<div class="boxed">
+				
+				<h1>Search Inputs</h1>
+				
+				<label for="searchInputExample1">Search Input:</label>
+				<input class="varSearchInputExample" type="search" name="search" id="searchInputExample1" value="" />
+				
+			    <label for="searchInputExample2">Text Input:</label>
+			    <input class="varSearchInputExample" type="text" name="searchInputExample2" id="searchInputExample2" value=""  />
+				
+				A Span bound to the same variable: <span class="varSearchInputExample bold"></span>
+				<br />
+				<br />
+				<span id="searchInputExampleDemoSpan"></span>
+				
+			</div>
+			
+			
+			<div class="boxed">
+				<h1>Slider</h1>
+				
+				<label for="varSlider">A Slider</label>
+				<input
+					class="varSlider"
+					type="range"
+					name="slider"
+					id="varSlider"
+					value="42"
+					min="0"
+					max="60"
+					data-highlight="true" />
+				
+			    <label for="sliderTextInput">Text Input:</label>
+			    <input id="sliderTextInput" type="text" class="varSlider" name="name" value=""  />
+				
+				A Span bound to the same variable: <span class="varSlider bold"></span>
+				
+			</div>
+			
+			
+			<div class="boxed">
+				
+				<h1>Flip toggle switch</h1>
+				
+				<div class="boxed">
+					<label for="flip5_1">Switch 1:</label>
+					<select class="varToggleSwitch" name="slider" id="flip5_1" data-role="slider">
+						<option value="off">Off</option>
+						<option value="on">On</option>
+					</select> 
+					
+					<label for="flip5_2">Switch 2:</label>
+					<select class="varToggleSwitch" name="slider" id="flip5_2" data-role="slider">
+						<option value="off">Off</option>
+						<option value="on">On</option>
+					</select> 
+				</div>
+				
+				A Span bound to the same variable: <span class="varToggleSwitch bold"></span>
+				
+			</div>
+			
+			
+			<div class="boxed">
+				
+				<h1>Radio Buttons</h1>
+				
+				<fieldset data-role="controlgroup">
+					<legend>Choose a pet:</legend>
+				     	<input class="varRadioExample" type="radio" name="radioExample" id="radioExampleId1_1" value="choice-1" checked="checked" />
+				     	<label for="radioExampleId1_1">Cat</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample" id="radioExampleId1_2" value="choice-2"  />
+				     	<label for="radioExampleId1_2">Dog</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample" id="radioExampleId1_3" value="choice-3"  />
+				     	<label for="radioExampleId1_3">Hamster</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample" id="radioExampleId1_4" value="choice-4"  />
+				     	<label for="radioExampleId1_4">Lizard</label>
+				</fieldset>
+				
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<legend>Choose a pet:</legend>
+				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_1" value="choice-1" checked="checked" />
+				     	<label for="radioExampleId2_1">Cat</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_2" value="choice-2"  />
+				     	<label for="radioExampleId2_2">Dog</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_3" value="choice-3"  />
+				     	<label for="radioExampleId2_3">Hamster</label>
+	
+				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_4" value="choice-4"  />
+				     	<label for="radioExampleId2_4">Lizard</label>
+				</fieldset>
+				
+				A Span bound to the same variable: <span class="varRadioExample bold"></span>
+				
+			</div>
+			
+			
+			<div class="boxed">
+				
+				<h1>Checkboxes</h1>
+			
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+						<legend>Colors you like:</legend>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorRed" />Red</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorGreen" />Green</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorBlue" />Blue</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorCyan" />Cyan</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorMagenta" />Magenta</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorYellow"/>Yellow</label>
+					</fieldset>
+				</div>
+				
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup" data-type="horizontal">
+						<legend>Colors you like:</legend>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorRed" />Red</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorGreen" />Green</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorBlue" />Blue</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorCyan" />Cyan</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorMagenta" />Magenta</label>
+						<label><input class="varColorCheckboxes" type="checkbox" value="colorYellow"/>Yellow</label>
+					</fieldset>
+				</div>
+				
+				
+				A Span bound to the same variable: <span class="varColorCheckboxes bold"></span>
+				<br />
+				A description of the object:<br />
+				<pre><code><span id="varColorCheckboxesDesc"></span></code></pre>
+				
+			</div>
+			
+			
+			<div class="boxed" id="div1">
+				<h1>Example 1</h1>
+				<h2>Two inputs and a span bound to the same variable</h2>
+				
+			    <label for="basic">Text Input 1, manual bind:</label>
+			    <input type="text" name="name" id="input1_1" value=""  />
+			    <label for="basic">Text Input 2, bound using convenience method:</label>
+			    <input type="text" name="name" id="input1_2" value=""  />
+				
+				A Span bound to the same variable: <span class="bold" id="span1"></span>
+				
+			</div>
+			
+			<div class="boxed" id="div2">
+				<h1>Example 2</h1>
+				<h2>Two inputs and a span bound to the same variable with less code</h2>
+				
+			    <label for="basic">Text Input 1, manual bind:</label>
+			    <input type="text" class="var2" name="name" value=""  />
+			    <label for="basic">Text Input 2, bound using convenience method:</label>
+			    <input type="text" class="var2" name="name" value=""  />
+				
+				A Span bound to the same variable: <span class="bold" id="span2"></span>
+				
+			</div>
+			
+			<div class="boxed" id="div3">
+				<h1>Example 3</h1>
+				<h2>Two inputs and a span bound to the same variable with even less code</h2>
+				
+			    <label for="basic">Text Input 1, manual bind:</label>
+			    <input type="text" class="var3" name="name" value=""  />
+			    <label for="basic">Text Input 2, bound using convenience method:</label>
+			    <input type="text" class="var3" name="name"value=""  />
+				
+				A Span bound to the same variable: <span class="var3 bold"></span>
+				
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			<label for="testSlider1" class="ui-hidden-accessible">A Slider</label>
+			<input
+				type="range"
+				name="slider"
+				id="testSlider1"
+				value="42"
+				min="0"
+				max="60"
+				data-highlight="true"
+				data-mini="true" />
+			
+			<span id="testSlider1Span">testSlider1Span</span> <br />
+			
+			<input id="testSlider1Input" data-inline="true" placeholder="slider" value="now" />		
+			
+			
+			
+			<input id="startTime" class="startTime" data-inline="true" placeholder="now" value="now" type="time" />		
+			<input id="startTime2" class="startTime" data-inline="true" placeholder="now" value="now" type="time" />		
+		
+			<input id="inner" data-inline="true" placeholder="now" value="now" />		
+			<span id="innerSpan">innerSpan</span> <br />
+			<span id="innerSpan2">innerSpan2</span> <br />
+			
+			<button id="unbindInnerSpan2" type="submit" data-inline="true" data-theme="c">unbindInnerSpan2</button> <br />
+			
+			
+			<label for="testSlider1" class="ui-hidden-accessible">${=name}</label>
+			<input
+				type="range"
+				name="slider"
+				id="testSlider1"
+				value="42"
+				min="0"
+				max="60"
+				data-highlight="true"
+				data-mini="true" />
+			
+			<span id="testSlider1Span">testSlider1Span</span> <br />
+			
+			<input id="testSlider1Input" data-inline="true" placeholder="slider" value="now" />		
+			
+	    </div><!-- /content -->
+		
+	</div>
+
+</body>
+</html>
