@@ -94,9 +94,9 @@ $(function() {
 		keyPath:	'varToggleSwitch'
 	});
 	
-	kvcRegisterObserver(testObject,'var5',function(obj,path,val) {
+	kvcRegisterObserver(testObject,'varToggleSwitch',function(obj,path,val) {
 		
-		console.log("var5 set to '%s'",String(val));
+		console.log("varToggleSwitch set to '%s'",String(val));
 	});
 	
 	

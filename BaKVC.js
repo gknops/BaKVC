@@ -276,24 +276,33 @@ function kvcBindAuto(parameters) {
 	var on=parameters.on;
 	var object=parameters.object;
 	var keyPath=parameters.keyPath;
+	var onValue=parameters.on;
+	var offValue=parameters.off;
 	
-	console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
+	// console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
 	
 	$(parameters.selector).on(parameters.events,parameters.selector2,function(event) {
 		
 		var val=$(this).val();
 		
-		// console.log('val: %s',val);
-		
-		if($(this)[0].type==='checkbox')
+		switch($(this)[0].type)
 		{
-			console.log('checkbox, val: %s',val);
-			
-			kvcSet(parameters.object,parameters.keyPath+'.'+String(val),$(this)[0].checked);
-		}
-		else
-		{
-			kvcSet(parameters.object,parameters.keyPath,val);
+			case 'checkbox':
+				kvcSet(parameters.object,parameters.keyPath+'.'+String(val),$(this)[0].checked);
+				break;
+			case 'select-one':
+				if($(this).attr('data-role')==='slider')
+				{
+					kvcSet(parameters.object,parameters.keyPath,(val===onValue));
+				}
+				else
+				{
+					kvcSet(parameters.object,parameters.keyPath,val);
+				}
+				break;
+			default:
+				kvcSet(parameters.object,parameters.keyPath,val);
+				break;
 		}
 	});
 	
@@ -305,10 +314,9 @@ function kvcBindAuto(parameters) {
 		
 		$(combinedSelector).each(function(index,element){
 			
-			console.log("element tag: %s  type: %s",element.tagName,element.type);
+			console.log("%s element tag: %s  type: %s",path,element.tagName,element.type);
 			// console.dir(element);
 			// console.dir($(element));
-			
 			
 			switch(element.tagName)
 			{
@@ -345,9 +353,9 @@ function kvcBindAuto(parameters) {
 					switch(element.type)
 					{
 						case 'select-one':
-							$(element).val(val);
 							if($(element).attr('data-role')==='slider')
 							{
+								$(element).val((val)?onValue:offValue);
 								if(typeof $(element).slider==='function')
 								{
 									$(element).slider('refresh');
@@ -355,7 +363,12 @@ function kvcBindAuto(parameters) {
 							}
 							else if(typeof $(element).selectmenu==='function')
 							{
+								$(element).val(val);
 								$(element).selectmenu('refresh');
+							}
+							else
+							{
+								$(element).val(val);
 							}
 							break;
 					}
