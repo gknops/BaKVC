@@ -114,12 +114,37 @@ $(function() {
 	kvcBindAuto('.varSelectMenu',testObject,'varSelectMenu','standard');
 });
 
+var jqmLoaded=false;
+var isJQM=false;
+
 function switchToJQM() {
 	
-	$('#jqmSwitch').remove();
+	if(isJQM)
+	{
+		location.reload();
+		isJQM=false;
+		
+		$('#jqmSwitch').val('Switch to jQuery Mobile');
+		
+		return;
+	}
 	
-	$('head').append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />');
-	$.getScript('http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js');
+	$('#jqmSwitch').val('Switch to standard HTML');
+	
+	// $('#jqmSwitch').remove();
+	
+	if(!jqmLoaded)
+	{
+		$('head').append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />');
+		$.getScript('http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js');
+		
+		jqmLoaded=true;
+	}
+	else
+	{
+		console.log("jqmLoaded!!!!!!!");
+	}
 	
 	$('body').trigger("create");
+	isJQM=true;
 }
