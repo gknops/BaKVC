@@ -33,47 +33,70 @@
 //*****************************************************************************
 // Global functions
 //*****************************************************************************
-function kvcSet(obj,path,val) {
+kvcSetParameterDescriptions=[
+	
+	// name			type		required	default
+	'object',		'object',	false,		window,
+	'keyPath',		'string',	true,		undefined,
+	'val',			undefined,	true,		undefined
+];
+function kvcSet() {
+	
+	var parameters=KVC.checkArguments(arguments,kvcSetParameterDescriptions);
+	var object=parameters.object;
+	var keyPath=parameters.keyPath;
+	var val=parameters.val;
 	
 	var	kvc,kvc2,oldVal,k,p;
-	var	idx=path.indexOf('.');
+	var	idx=keyPath.indexOf('.');
 	
 	if(idx<0)
 	{
-		oldVal=obj[path];
-		obj[path]=val;
+		oldVal=object[keyPath];
+		object[keyPath]=val;
 	}
 	else
 	{
-		k=path.substr(0,idx);
-		p=path.substr(idx+1);
+		k=keyPath.substr(0,idx);
+		p=keyPath.substr(idx+1);
 		
-		oldVal=kvcSet(obj[k],p,val);
+		oldVal=kvcSet(object[k],p,val);
 		
 		kvc2=KVC_ObservedPaths[k];
 	}
 	
-	kvc=KVC_ObservedPaths[path];
+	kvc=KVC_ObservedPaths[keyPath];
 	
 	if(kvc)
 	{
-		kvc.pushNotifications(obj,path,val,oldVal);
+		kvc.pushNotifications(object,keyPath,val,oldVal);
 	}
 	
 	if(kvc2)
 	{
-		kvc2.pushNotifications(obj,k,obj[k],oldVal);
+		kvc2.pushNotifications(object,k,object[k],oldVal);
 	}
 	
 	return oldVal;
 }
-function kvcRegisterObserver(obj,path,funcOrFuncName,target,fireNow) {
+kvcRegisterObserverParameterDescriptions=[
 	
-	if(typeof target==="boolean")
-	{
-		fireNow=target;
-		target=undefined;
-	}
+	// name				type		required	default
+	'object',			'object',	false,		window,
+	'keyPath',			'string',	true,		undefined,
+	'funcOrFuncName',	undefined,	true,		undefined,
+	'target',			'object',	false,		undefined,
+	'fireNow',			'boolean',	false,		false
+];
+function kvcRegisterObserver() {
+	
+	var parameters=KVC.checkArguments(arguments,kvcRegisterObserverParameterDescriptions);
+	
+	var obj=parameters.object;
+	var path=parameters.keyPath;
+	var funcOrFuncName=parameters.funcOrFuncName;
+	var target=parameters.target;
+	var fireNow=parameters.fireNow;
 	
 	var	kvc=KVC_ObservedPaths[path];
 	
@@ -101,7 +124,22 @@ function kvcRegisterObserver(obj,path,funcOrFuncName,target,fireNow) {
 	
 	return retVal;
 }
-function kvcUnregisterObserver(obj,path,funcOrFuncName,target) {
+kvcUnregisterObserverParameterDescriptions=[
+	
+	// name				type		required	default
+	'object',			'object',	false,		window,
+	'keyPath',			'string',	true,		undefined,
+	'funcOrFuncName',	undefined,	true,		undefined,
+	'target',			'object',	false,		undefined
+];
+function kvcUnregisterObserver() {
+	
+	var parameters=KVC.checkArguments(arguments,kvcUnregisterObserverParameterDescriptions);
+	
+	var obj=parameters.object;
+	var path=parameters.keyPath;
+	var funcOrFuncName=parameters.funcOrFuncName;
+	var target=parameters.target;
 	
 	var	kvc=KVC_ObservedPaths[path];
 	
@@ -121,22 +159,22 @@ function kvcUnregisterObserver(obj,path,funcOrFuncName,target) {
 }
 
 //*****************************************************************************
-// Convenience methods, require jQuery
+// Convenience methods, requires jQuery
 //*****************************************************************************
-kvcBindAutoParameterDescriptions=[
+kvcBindUIParameterDescriptions=[
 	
 	// name			type		required	default
 	'selector',		'string',	true,		undefined,
-	'object',		'object',	true,		undefined,
+	'object',		'object',	false,		window,
 	'keyPath',		'string',	true,		undefined,
 	'value',		undefined,	false,		undefined,
 	'events',		'string',	false,		'change',
 	'on',			'string',	false,		'on',
 	'off',			'string',	false,		'off'
 ];
-function kvcBindAuto() {
+function kvcBindUI() {
 	
-	var parameters=KVC.checkArguments(arguments,kvcBindAutoParameterDescriptions);
+	var parameters=KVC.checkArguments(arguments,kvcBindUIParameterDescriptions);
 	
 	// console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
 	
