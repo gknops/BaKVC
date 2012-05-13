@@ -330,7 +330,6 @@ function kvcBindAuto(parameters) {
 							}
 							break;
 						case 'checkbox':
-							// console.dir(element);
 							element.checked=val[element.value];
 							if(typeof $(element).checkboxradio==='function')
 							{
@@ -347,15 +346,19 @@ function kvcBindAuto(parameters) {
 					{
 						case 'select-one':
 							$(element).val(val);
-							if(typeof $(element).slider==='function')
+							if($(element).attr('data-role')==='slider')
 							{
-								$(element).slider('refresh');
+								if(typeof $(element).slider==='function')
+								{
+									$(element).slider('refresh');
+								}
+							}
+							else if(typeof $(element).selectmenu==='function')
+							{
+								$(element).selectmenu('refresh');
 							}
 							break;
 					}
-					break;
-				case 'SELECTx':
-					$(element).val(val);
 					break;
 				default:
 					$(element).html(String(val));
