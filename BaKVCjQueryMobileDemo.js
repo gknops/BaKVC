@@ -2,7 +2,7 @@
 //	Copyright 2012 BITart Gerd Knops, all rights reserved.
 //
 //	Project: Sprinkler
-//	File   : BaKVCDemo.js
+//	File   : BaKVCjQueryMobileDemo.js
 //	Author : Gerd Knops gerti@BITart.com
 //
 //*****************************************************************************
