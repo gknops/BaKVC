@@ -169,7 +169,7 @@ function kvcBindAuto() {
 		
 		$(parameters.selector).each(function(index,element){
 			
-			console.log("%s element tag: %s  type: %s",path,element.tagName,element.type);
+			// console.log("%s element tag: %s  type: %s",path,element.tagName,element.type);
 			// console.dir(element);
 			// console.dir($(element));
 			
