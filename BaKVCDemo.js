@@ -91,7 +91,8 @@ $(function() {
 	kvcBindAuto({
 		selector:	'.varToggleSwitch',
 		object:		testObject,
-		keyPath:	'varToggleSwitch'
+		keyPath:	'varToggleSwitch',
+		value:		false
 	});
 	
 	kvcRegisterObserver(testObject,'varToggleSwitch',function(obj,path,val) {

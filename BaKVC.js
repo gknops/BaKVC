@@ -273,12 +273,6 @@ function kvcBindAuto(parameters) {
 	
 	parameters=KVC.checkParameters(parameters,kvcBindAutoParameterDescriptions);
 	
-	var on=parameters.on;
-	var object=parameters.object;
-	var keyPath=parameters.keyPath;
-	var onValue=parameters.on;
-	var offValue=parameters.off;
-	
 	// console.log("%s - %s - %s",parameters.selector,keyPath,parameters.events);
 	
 	$(parameters.selector).on(parameters.events,parameters.selector2,function(event) {
@@ -293,7 +287,7 @@ function kvcBindAuto(parameters) {
 			case 'select-one':
 				if($(this).attr('data-role')==='slider')
 				{
-					kvcSet(parameters.object,parameters.keyPath,(val===onValue));
+					kvcSet(parameters.object,parameters.keyPath,(val===parameters.on));
 				}
 				else
 				{
@@ -355,7 +349,7 @@ function kvcBindAuto(parameters) {
 						case 'select-one':
 							if($(element).attr('data-role')==='slider')
 							{
-								$(element).val((val)?onValue:offValue);
+								$(element).val((val)?parameters.on:parameters.off);
 								if(typeof $(element).slider==='function')
 								{
 									$(element).slider('refresh');
