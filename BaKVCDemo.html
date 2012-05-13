@@ -1,16 +1,14 @@
 <!DOCTYPE html> 
 <html> 
 	<head> 
-	<title>BaKVC Demo (jQuery Mobile)</title> 
+	<title>BaKVC Demo</title> 
     <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 	
 	<script type="text/javascript" src="BaKVC.js"></script>
-	<script type="text/javascript" src="BaKVCjQueryMobileDemo.js"></script>
+	<script type="text/javascript" src="BaKVCDemo.js"></script>
 	
 	<style type="text/css">
 		div .boxed {
@@ -41,13 +39,17 @@
 		<!-- header -->
 	    <div class="scrollTop" data-role="header" data-position="fixed">
 			
-	        <h1>BaKVC Demo (jQuery Mobile)</h1>
+	        <h1>BaKVC Demo</h1>
 			
 	    </div>
 		
 		
 		<!-- content -->
 	    <div id="homeContent" data-role="content">
+			
+			
+			<input id="jqmSwitch" type="button" value="Switch to jQuery Mobile!" onClick="switchToJQM(this.form)" />
+			
 			
 			<!--==========================================================================
 			# Text Inputs
@@ -58,10 +60,10 @@
 				
 			    <label for="textInputExample1">Text Input1:</label>
 			    <input class="varTextInputExample" type="text" name="textInput1" id="textInputExample1" value=""  />
-				
+				<br />
 			    <label for="textInputExample2">Text Input2:</label>
 			    <input class="varTextInputExample" type="text" name="textInput2" id="textInputExample2" value=""  />
-				
+				<br />
 				A Span bound to the same variable: <span class="varTextInputExample bold"></span>
 				
 			</div>
@@ -76,10 +78,10 @@
 				
 				<label for="searchInputExample1">Search Input:</label>
 				<input class="varSearchInputExample" type="search" name="search" id="searchInputExample1" value="" />
-				
+				<br />
 			    <label for="searchInputExample2">Text Input:</label>
 			    <input class="varSearchInputExample" type="text" name="searchInputExample2" id="searchInputExample2" value=""  />
-				
+				<br />
 				A Span bound to the same variable: <span class="varSearchInputExample bold"></span>
 				<br />
 				<br />
@@ -104,10 +106,10 @@
 					min="0"
 					max="60"
 					data-highlight="true" />
-				
+				<br />
 			    <label for="sliderTextInput">Text Input:</label>
 			    <input id="sliderTextInput" type="text" class="varSlider" name="name" value=""  />
-				
+				<br />
 				A Span bound to the same variable: <span class="varSlider bold"></span>
 				
 			</div>
@@ -127,7 +129,7 @@
 				</select> 
 				<br />
 				<br />
-				
+				<br />
 				<label for="flip5_2">Switch 2:</label>
 				<select class="varToggleSwitch" name="slider" id="flip5_2" data-role="slider">
 					<option value="off">Off</option>
@@ -161,7 +163,7 @@
 				     	<input class="varRadioExample" type="radio" name="radioExample" id="radioExampleId1_4" value="choice-4"  />
 				     	<label for="radioExampleId1_4">Lizard</label>
 				</fieldset>
-				
+				<br />
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<legend>Choose a pet:</legend>
 				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_1" value="choice-1" checked="checked" />
@@ -176,7 +178,7 @@
 				     	<input class="varRadioExample" type="radio" name="radioExample2" id="radioExampleId2_4" value="choice-4"  />
 				     	<label for="radioExampleId2_4">Lizard</label>
 				</fieldset>
-				
+				<br />
 				A Span bound to the same variable: <span class="varRadioExample bold"></span>
 				
 			</div>
@@ -200,7 +202,7 @@
 						<label><input class="varColorCheckboxes" type="checkbox" value="colorYellow"/>Yellow</label>
 					</fieldset>
 				</div>
-				
+				<br />
 				<div data-role="fieldcontain">
 					<fieldset data-role="controlgroup" data-type="horizontal">
 						<legend>Colors you like:</legend>
@@ -212,7 +214,7 @@
 						<label><input class="varColorCheckboxes" type="checkbox" value="colorYellow"/>Yellow</label>
 					</fieldset>
 				</div>
-				
+				<br />
 				
 				A Span bound to the same variable: <span class="varColorCheckboxes bold"></span>
 				<br />
@@ -236,7 +238,7 @@
 					<option value="express">Express: next day</option>
 					<option value="overnight">Overnight</option>
 				</select>
-				
+				<br />
 				<label for="select-choice-1" class="select">Shipping method:</label>
 				<select id="select-choice-1" class="varSelectMenu" data-mini="true">
 					<option value="standard">Standard: 7 day</option>
@@ -244,7 +246,7 @@
 					<option value="express">Express: next day</option>
 					<option value="overnight">Overnight</option>
 				</select>
-				
+				<br />
 				A Span bound to the same variable: <span class="varSelectMenu bold"></span>
 				
 			</div>
