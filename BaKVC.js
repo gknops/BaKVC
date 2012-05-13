@@ -38,14 +38,14 @@ kvcSetParameterDescriptions=[
 	// name			type		required	default
 	'object',		'object',	false,		window,
 	'keyPath',		'string',	true,		undefined,
-	'val',			undefined,	true,		undefined
+	'value',		undefined,	true,		undefined
 ];
 function kvcSet() {
 	
 	var parameters=KVC.checkArguments(arguments,kvcSetParameterDescriptions);
 	var object=parameters.object;
 	var keyPath=parameters.keyPath;
-	var val=parameters.val;
+	var val=parameters.value;
 	
 	var	kvc,kvc2,oldVal,k,p;
 	var	idx=keyPath.indexOf('.');
@@ -112,7 +112,7 @@ function kvcRegisterObserver() {
 	{
 		var val=obj[path];
 		
-		if(typeof funcOrFuncName==="string")
+		if(target)
 		{
 			target[funcOrFuncName](val,val,path,obj);
 		}
@@ -274,9 +274,14 @@ function kvcBindUI() {
 		});
 	});
 	
+	
 	if(parameters.value!==undefined)
 	{
 		kvcSet(parameters.object,parameters.keyPath,parameters.value);
+	}
+	else if(parameters.object[parameters.keyPath]!==undefined)
+	{
+		kvcSet(parameters.object,parameters.keyPath,parameters.object[parameters.keyPath]);
 	}
 }
 

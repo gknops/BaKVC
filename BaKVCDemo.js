@@ -36,7 +36,6 @@ $(function() {
 	//*****************************************************************************
 	// Text Inputs
 	//*****************************************************************************
-	
 	kvcBindUI('.varTextInputExample','varTextInputExample','The quick brown fox','keyup change');
 	
 	
