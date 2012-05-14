@@ -96,9 +96,9 @@ kvcRegisterObserverParameterDescriptions=[
 	// name				type		required	default
 	'object',			'object',	false,		window,
 	'keyPath',			'string',	true,		undefined,
+	'fireNow',			'boolean',	false,		false,
 	'funcOrFuncName',	undefined,	true,		undefined,
-	'target',			'object',	false,		undefined,
-	'fireNow',			'boolean',	false,		false
+	'target',			'object',	false,		undefined
 ];
 function kvcRegisterObserver() {
 	
