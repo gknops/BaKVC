@@ -114,6 +114,12 @@ The value to set.
 
 This function is used to register an observer. It returns `funcOrFuncName`.
 
+The function or method called when the observer fires should have this signature:
+
+	function(val,valOld,keyPath,obj)
+
+where `val` is the new value, `valOld` the old value, and `keyPath` and `obj` are the same values used during registration.
+
 Notes:
 
 - Observing of a given object and key path is disabled while the associated observers fire. This prevents dead loops.
