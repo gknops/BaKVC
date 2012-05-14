@@ -28,6 +28,8 @@
 //	Global variables
 //*****************************************************************************
 
+var testObjectGlobal={};
+
 //*****************************************************************************
 // Startup
 //*****************************************************************************
@@ -79,7 +81,8 @@ $(function() {
 	//*****************************************************************************
 	// Slider
 	//*****************************************************************************
-	kvcBindUI('.varSlider','varSlider',42);
+	// Using a file-global variable
+	kvcBindUI('.varSlider',testObjectGlobal,'varSlider',42);
 	
 	
 	//*****************************************************************************
@@ -172,5 +175,15 @@ function switchToJQM() {
 		// Triggering the create event makes jQuery Mobile enhance the elements.
 		$('body').trigger("create");
 		isJQM=true;
+		
+		// Nasty hack: somehow slider object bindings do not survive the create
+		// event. We can't re-set them directly either for whatever reason,
+		// probably some oddity in jQuery Mobile.
+		setTimeout(fixSlider,2000);
 	}
+}
+function fixSlider(){
+	
+	kvcBindUI('.varSlider',testObjectGlobal,'varSlider');
+	
 }

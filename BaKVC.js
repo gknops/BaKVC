@@ -326,6 +326,8 @@ function kvcBindUI() {
 		// Otherwise if the observed property has a defined value,
 		// invoke the newly created observer function with that value
 		// to update the UI.
+		var v=parameters.object[parameters.keyPath];
+		
 		newObserverFunc(v,v,parameters.keyPath,parameters.object);
 	}
 }
