@@ -206,6 +206,9 @@ function kvcBindUI() {
 		// Get the element's new value
 		var val=$(this).val();
 		
+		// Mark element which is the originator of a new value
+		$(this).attr('BaKVCinEvent',true);
+		
 		switch($(this)[0].type)
 		{
 			case 'checkbox':
@@ -231,6 +234,9 @@ function kvcBindUI() {
 				kvcSet(parameters.object,parameters.keyPath,val);
 				break;
 		}
+		
+		// Clean up
+		$(this).removeAttr('BaKVCinEvent');
 	});
 	
 	// Register observer on the object and key path.
@@ -243,76 +249,81 @@ function kvcBindUI() {
 			// console.dir(element);
 			// console.dir($(element));
 			
-			switch(element.tagName)
+			// If the element is the source of the event that
+			// triggered the observer, do not set it. Otherwise
+			// text elements will loose their insewrtion point etc.
+			if(!$(element).attr('BaKVCinEvent'))
 			{
-				case 'INPUT':
-					switch(element.type)
-					{
-						case 'number':
-							$(element).val(val);
-							if(typeof $(element).slider==='function')
-							{
-								// Make sure jQuery Mobile sliders are refreshed.
-								$(element).slider('refresh');
-							}
-							break;
-						case 'radio':
-							// Special-case radio buttons, set checked if
-							// the elements value matches val, unchecked otherwise.
-							element.checked=(element.value===val);
-							if(typeof $(element).checkboxradio==='function')
-							{
-								// Make sure jQuery Mobile radio buttons are refreshed.
-								$(element).checkboxradio('refresh');
-							}
-							break;
-						case 'checkbox':
-							// Special-case checkboxes, set checked if
-							// the elements value when used as property in val yields a
-							// true value, unchecked otherwise.
-							element.checked=val[element.value];
-							if(typeof $(element).checkboxradio==='function')
-							{
-								// Make sure jQuery Mobile checkboxes are refreshed.
-								$(element).checkboxradio('refresh');
-							}
-							break;
-						default:
-							// For other input elements just set val.
-							$(element).val(val);
-							break;
-					}
-					break;
-				case 'SELECT':
-					switch(element.type)
-					{
-						case 'select-one':
-							if($(element).attr('data-role')==='slider')
-							{
-								$(element).val((val)?parameters.on:parameters.off);
+				switch(element.tagName)
+				{
+					case 'INPUT':
+						switch(element.type)
+						{
+							case 'number':
+								$(element).val(val);
 								if(typeof $(element).slider==='function')
 								{
+									// Make sure jQuery Mobile sliders are refreshed.
 									$(element).slider('refresh');
 								}
-							}
-							else if(typeof $(element).selectmenu==='function')
-							{
+								break;
+							case 'radio':
+								// Special-case radio buttons, set checked if
+								// the elements value matches val, unchecked otherwise.
+								element.checked=(element.value===val);
+								if(typeof $(element).checkboxradio==='function')
+								{
+									// Make sure jQuery Mobile radio buttons are refreshed.
+									$(element).checkboxradio('refresh');
+								}
+								break;
+							case 'checkbox':
+								// Special-case checkboxes, set checked if
+								// the elements value when used as property in val yields a
+								// true value, unchecked otherwise.
+								element.checked=val[element.value];
+								if(typeof $(element).checkboxradio==='function')
+								{
+									// Make sure jQuery Mobile checkboxes are refreshed.
+									$(element).checkboxradio('refresh');
+								}
+								break;
+							default:
+								// For other input elements just set val.
 								$(element).val(val);
-								$(element).selectmenu('refresh');
-							}
-							else
-							{
-								$(element).val(val);
-							}
-							break;
-					}
-					break;
-				default:
-					// For any remaining elements set val as html.
-					$(element).html(String(val));
-					break;
+								break;
+						}
+						break;
+					case 'SELECT':
+						switch(element.type)
+						{
+							case 'select-one':
+								if($(element).attr('data-role')==='slider')
+								{
+									$(element).val((val)?parameters.on:parameters.off);
+									if(typeof $(element).slider==='function')
+									{
+										$(element).slider('refresh');
+									}
+								}
+								else if(typeof $(element).selectmenu==='function')
+								{
+									$(element).val(val);
+									$(element).selectmenu('refresh');
+								}
+								else
+								{
+									$(element).val(val);
+								}
+								break;
+						}
+						break;
+					default:
+						// For any remaining elements set val as html.
+						$(element).html(String(val));
+						break;
+				}
 			}
-			
 		});
 	});
 	
